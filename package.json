@@ -5,6 +5,10 @@
   "main": "dist/commonjs/index.js",
   "jsnext:main": "dist/es/index.js",
   "module": "dist/es/index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
   "keywords": [
     "react scripts",
     "create react app",
@@ -14,7 +18,8 @@
     "clean": "rimraf dist && mkdirp dist",
     "build:cjs": "babel src --out-dir dist/commonjs",
     "build:es": "BABEL_ENV=jsnext babel src --out-dir dist/es",
-    "build": "npm run clean && npm run build:cjs && npm run build:es"
+    "build": "npm run clean && npm run build:cjs && npm run build:es",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -22,6 +27,9 @@
   },
   "author": "Jimmy Shen <shendepu@hotmail.com> (https://github.com/shendepu)",
   "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "bugs": {
     "url": "https://github.com/shendepu/react-scripts-webpack-config/issues"
   },
