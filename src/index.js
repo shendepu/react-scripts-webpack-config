@@ -7,7 +7,7 @@ function resolveApp(relativePath) {
   return path.resolve(appDirectory, relativePath)
 }
 
-const appNodeModulesDirectory = resolveApp('../')
+const appNodeModulesDirectory = resolveApp('node_modules')
 
 function getFileStat(absolutePath) {
   try {
