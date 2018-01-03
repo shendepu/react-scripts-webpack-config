@@ -1,6 +1,6 @@
 {
   "name": "react-scripts-webpack-config",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Extend create-react-app webpack config",
   "main": "dist/commonjs/index.js",
   "jsnext:main": "dist/es/index.js",
