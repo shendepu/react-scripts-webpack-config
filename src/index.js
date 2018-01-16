@@ -33,6 +33,7 @@ function extendConfig(webpackEnv, callback) {
 
   return moveAsOrigin(webpackEnv)
     .then(() => createWebpackConfig(webpackEnv))
+    .then(() => createWebpackDevServerConfig())
     .then(() => callback())
 }
 
@@ -63,4 +64,27 @@ module.exports = customConfigFunc(config)
   }
 }
 
+function createWebpackDevServerConfig() {
+  const myDevServerConfig = resolveApp('config/webpackDevServer.config.js')
+  const myStat = getFileStat(myDevServerConfig)
+  if (!myStat) return Promise.resolve()
+
+  const originDevServerConfig = path.resolve(appNodeModulesDirectory, 'react-scripts/config/webpackDevServer.config.origin.js')
+  if (getFileStat(originDevServerConfig)) return Promise.resolve()
+
+  const devServerConfig = path.resolve(appNodeModulesDirectory, 'react-scripts/config/webpackDevServer.config.js')
+  fse.moveSync(devServerConfig, originDevServerConfig)
+
+  return fse.outputFile(
+    devServerConfig,
+    `const configFunc = require('./webpackDevServer.config.origin')
+const customConfigFunc = require('../../../config/webpackDevServer.config')
+
+module.exports = function(proxy, allowedHost) {
+  const devConfig = configFunc(proxy, allowedHost)
+  return customConfigFunc(devConfig)
+}  
+  `
+  )
+}
 module.exports = extendConfig
